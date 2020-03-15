@@ -1,0 +1,63 @@
+version: '3.1'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app
+    container_name: app-ld
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - /var/www/vendor
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini      
+    networks:
+      - app-network
+
+  #Nginx Service For Development Only
+  webserver:
+    image: nginx:alpine
+    container_name: webserver-ld
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/nginx/certs/:/etc/nginx/certs/
+    networks:
+      - app-network
+
+
+  #Node Service For Development Only
+  node:
+    image: node:10
+    container_name: node-ld
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - /var/www/node_modules
+    ports: 
+      - "9056:9056"
+    #command: "npm install"
+    #command: "npm run prod"
+    command: "npm run watch"
+    networks:
+      - app-network
+
+  
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
