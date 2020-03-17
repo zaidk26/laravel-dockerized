@@ -7,11 +7,11 @@ services:
       context: .
       dockerfile: Dockerfile
     image: app
-    container_name: app-ld
+    container_name: app
     restart: unless-stopped
     tty: true
     environment:
-      SERVICE_NAME: app
+      SERVICE_NAME: php-my-app
     working_dir: /var/www
     volumes:
       - ./:/var/www
@@ -23,7 +23,7 @@ services:
   #Nginx Service For Development Only
   webserver:
     image: nginx:alpine
-    container_name: webserver-ld
+    container_name: webserver-my-app
     restart: unless-stopped
     tty: true
     ports:
@@ -40,7 +40,7 @@ services:
   #Node Service For Development Only
   node:
     image: node:10
-    container_name: node-ld
+    container_name: node-my-app
     restart: unless-stopped
     tty: true
     working_dir: /var/www
