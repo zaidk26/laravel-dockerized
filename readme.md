@@ -31,6 +31,9 @@ Once done and subsequent runs
 
 ````docker exec node-my-app npm run watch````
 
+Run all Mix tasks and minify output...
+````npm run production````
+
 
 
 
