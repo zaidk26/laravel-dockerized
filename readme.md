@@ -31,8 +31,11 @@ Once done and subsequent runs
 
 ````docker exec node-my-app npm run watch````
 
+Production  Compile Assets
 Run all Mix tasks and minify output...
 ````npm run production````
+
+PHP artisan commands can be run in the same manner against your php app container
 
 
 

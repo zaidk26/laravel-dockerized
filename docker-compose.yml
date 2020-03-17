@@ -7,11 +7,11 @@ services:
       context: .
       dockerfile: Dockerfile
     image: app
-    container_name: app
+    container_name: php-my-app
     restart: unless-stopped
     tty: true
     environment:
-      SERVICE_NAME: php-my-app
+      SERVICE_NAME: php-app
     working_dir: /var/www
     volumes:
       - ./:/var/www
