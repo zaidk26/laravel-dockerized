@@ -6,13 +6,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: app
+    image: app-php-7.4
     container_name: php-my-app
     restart: unless-stopped
     tty: true
     environment:
-      - TERM=xterm-256color
-      - SERVICE_NAME=php-app
+       - TERM=xterm-256color
+       - SERVICE_NAME=php-app
     working_dir: /var/www
     volumes:
       - ./:/var/www
@@ -26,9 +26,9 @@ services:
     image: nginx:alpine
     container_name: webserver-my-app
     restart: unless-stopped
+    tty: true    
     environment:
       - TERM=xterm-256color
-    tty: true
     ports:
       - "80:80"
       - "443:443"
@@ -42,23 +42,18 @@ services:
 
   #Node Service For Development Only
   node:
-    image: node:10
+    image: node:13.13.0-alpine
     container_name: node-my-app
     restart: unless-stopped
     tty: true
-    environment:
-      - TERM=xterm-256color
     working_dir: /var/www
     volumes:
       - ./:/var/www
       - /var/www/node_modules
     ports: 
       - "9056:9056"
-    command: "tail -f /dev/null"
     networks:
-      - app-network
-
-  
+      - app-network  
 
 #Docker Networks
 networks:

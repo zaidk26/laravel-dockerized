@@ -21,7 +21,7 @@
 
 Start Terminal with Color Output
 
-````docker exec -it node-my-app bash````
+````docker exec -it node-my-app sh````
 
 Starts Containers and runs compose install
 
