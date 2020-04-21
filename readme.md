@@ -23,6 +23,8 @@ Start Terminal with Color Output
 
 ````docker exec -it node-my-app sh````
 
+````docker exec -it php-my-app bash````
+
 Starts Containers and runs compose install
 
 ````docker-compose up -d````

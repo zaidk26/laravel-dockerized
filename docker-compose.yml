@@ -27,8 +27,6 @@ services:
     container_name: webserver-my-app
     restart: unless-stopped
     tty: true    
-    environment:
-      - TERM=xterm-256color
     ports:
       - "80:80"
       - "443:443"
