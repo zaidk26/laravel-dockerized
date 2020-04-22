@@ -40,7 +40,7 @@ services:
 
   #Node Service For Development Only
   node:
-    image: node:13.13.0-alpine
+    image: node:14
     container_name: node-my-app
     restart: unless-stopped
     tty: true

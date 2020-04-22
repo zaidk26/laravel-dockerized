@@ -19,23 +19,30 @@
 
 # Running
 
-Start Terminal with Color Output
-
-````docker exec -it node-my-app sh````
-
-````docker exec -it php-my-app bash````
-
 Starts Containers and runs compose install
 
 ````docker-compose up -d````
 
+Start Terminal
+
+````docker exec -it node-my-app bash````
+
+````docker exec -it php-my-app bash````
+
+
+
 On first run to install node modules
 
+if no terminal
+````docker exec node-my-app npm install````
+
+or in terminal
 ````docker exec node-my-app npm install````
 
 Once done and subsequent runs
+*Start a terminal first and run this command so you get color output*
 
-````docker exec node-my-app npm run watch````
+````npm run watch````
 
 Production  Compile Assets
 Run all Mix tasks and minify output...
