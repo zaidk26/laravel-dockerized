@@ -2,58 +2,47 @@ version: '3.1'
 services:
 
   #PHP Service
-  app:
+  app:   
     build:
-      context: .
-      dockerfile: Dockerfile
-    image: app-php-7.4
-    container_name: php-my-app
+      context: ./
+      dockerfile: Dockerfile   
+    container_name: php-glrt-api
     restart: unless-stopped
     tty: true
     environment:
        - TERM=xterm-256color
        - SERVICE_NAME=php-app
+       - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1     
     working_dir: /var/www
-    volumes:
-      - ./:/var/www
-      - /var/www/vendor
-      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini      
-    networks:
-      - app-network
-
-  #Nginx Service For Development Only
-  webserver:
-    image: nginx:alpine
-    container_name: webserver-my-app
-    restart: unless-stopped
-    tty: true    
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./:/var/www
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-      - ./docker/nginx/certs/:/etc/nginx/certs/
-    networks:
-      - app-network
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini   
+      - ./docker/nginx/conf.d/app.conf:/etc/nginx/sites-available/default
+      - ./docker/php/fpm.ini:/usr/local/etc/php-fpm.d/www.conf.default
 
 
-  #Node Service For Development Only
+  #Redis
+  redis:
+    image: redis:6.0.5
+    container_name: redis-glrt-api
+    restart: unless-stopped
+    tty: true
+    ports: 
+      - "6379:6379"
+
+
+  #Node Service For VUE UI Development Only
   node:
     image: node:14
-    container_name: node-my-app
+    container_name: node-glrt-api
     restart: unless-stopped
     tty: true
     working_dir: /var/www
     volumes:
-      - ./:/var/www
+      - ./ui:/var/www
       - /var/www/node_modules
+      - ./:/var # Mount Php For Building for production
     ports: 
-      - "9056:9056"
-    networks:
-      - app-network  
-
-#Docker Networks
-networks:
-  app-network:
-    driver: bridge
+      - "9999:9999"
