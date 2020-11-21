@@ -6,13 +6,14 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile   
-    container_name: php-glrt-api
+    container_name: php-elfix
     restart: unless-stopped
     tty: true
     environment:
        - TERM=xterm-256color
        - SERVICE_NAME=php-app
-       - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1     
+       - PHP_OPCACHE_ENABLE=1
+       - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1       
     working_dir: /var/www
     ports:
       - "80:80"
@@ -21,12 +22,13 @@ services:
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini   
       - ./docker/nginx/conf.d/app.conf:/etc/nginx/sites-available/default
       - ./docker/php/fpm.ini:/usr/local/etc/php-fpm.d/www.conf.default
+     
 
 
   #Redis
   redis:
     image: redis:6.0.5
-    container_name: redis-glrt-api
+    container_name: redis-elfix
     restart: unless-stopped
     tty: true
     ports: 
@@ -36,7 +38,7 @@ services:
   #Node Service For VUE UI Development Only
   node:
     image: node:14
-    container_name: node-glrt-api
+    container_name: node-elfix
     restart: unless-stopped
     tty: true
     working_dir: /var/www
